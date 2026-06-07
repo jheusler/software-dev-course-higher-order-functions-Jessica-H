@@ -92,3 +92,46 @@ Step-by-Step:
 // console.log("Uppercased names:", ...);
 // console.log("Discounted products:", ...);
 // console.log("Total value in stock:", ...);
+
+// =========================================
+// Task 1: Filter Products by Availability
+// =========================================
+
+function filterProducts(callback) {
+  return products.filter(callback);
+}
+
+const inStockProducts = filterProducts(product => product.inStock === true);
+console.log("In-stock products:", inStockProducts);
+
+// =========================================
+// Task 2: Uppercase Product Names
+// =========================================
+
+const uppercaseNames = products.map(product => product.name.toUpperCase());
+console.log("Uppercase names:", uppercaseNames);
+
+// =========================================
+// Task 3: Apply Discount (HOF returns a function)
+// =========================================
+
+function applyDiscount(discountPercent) {
+  return function(product) {
+    const discounted = product.price * (1 - discountPercent / 100);
+    return { ...product, price: discounted };
+  };
+}
+
+const applyTenPercent = applyDiscount(10);
+const discountedProducts = products.map(applyTenPercent);
+console.log("Discounted prices:", discountedProducts);
+
+// =========================================
+// Task 4: Total Value of In-Stock Products
+// =========================================
+
+const totalInventoryValue = products
+  .filter(product => product.inStock)
+  .reduce((total, product) => total + product.price, 0);
+
+console.log("Total in-stock value: $" + totalInventoryValue);
